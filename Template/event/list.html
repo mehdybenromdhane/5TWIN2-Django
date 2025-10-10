@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+
+
+<div class="d-flex p-5">
+{% for e in events %}
+<div class="card m-3" style="width: 18rem;">
+  <img src="{{e.image.url}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{e.title}}</h5>
+    <p class="card-text">{{e.description}}</p>
+
+    <p class="card-text">organisateur : {{e.organisateur}}</p>
+    <p class="card-text">date : {{e.evt_date}}</p>
+    <p class="card-text">Number of participants : {{e.nbr_participants}}</p>
+
+    <a href="{% url 'eventDetails'  e.id  %}" class="btn btn-primary">Details</a>
+
+        <a href="{% url 'updateEvent'  e.id  %}" class="btn btn-secondary">update</a>
+
+                <a href="{% url 'deleteEvent'  e.id  %}" class="btn btn-danger">delete</a>
+
+
+  </div>
+</div>
+
+{% endfor %}
+
+</div>
+{% endblock %}
