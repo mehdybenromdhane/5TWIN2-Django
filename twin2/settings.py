@@ -134,3 +134,5 @@ MEDIA_ROOT='media'
 
 
 AUTH_USER_MODEL= "Person.Person"
+
+LOGOUT_REDIRECT_URL ='/event/list'

@@ -26,15 +26,34 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{% url 'listEvents' %}">List events</a>
         </li>
+
+        {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'addEvent' %}">Add event</a>
         </li>
 
+       
                 <li class="nav-item">
           <a class="nav-link" href="{% url 'addClass' %}">Add event with class</a>
         </li>
+         {% else %}
+
+        {% endif %}
     
     </div>
+
+    {% if user.is_authenticated %}
+   <h3>welcome  {{user}} </h3> 
+
+   <a href="{% url 'logout' %}" class="btn btn-danger mx-3"> logout</a>
+   {% else %}
+
+   <a href="{% url 'login' %}" class="btn btn-success mx-2">Login</a>
+
+      <a href="{% url 'register' %}" class="btn btn-warning">Register</a>
+
+
+      {% endif %}
   </div>
 </nav>
 

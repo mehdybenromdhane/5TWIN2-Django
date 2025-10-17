@@ -13,9 +13,9 @@
     <p class="card-text">organisateur : {{event.oragnisateur}}</p>
     <p class="card-text">date : {{event.evt_date}}</p>
 
-    <a href="{% url 'join' event.id  %}" class="btn btn-success {% if btn %} disabled {% else %}  {% endif %}">Participer</a>
+    <a href="{% url 'join' event.id  %}" class="btn btn-success {% if btn %} disabled  {% endif %}">Participer</a>
 
-        <a href="{% url 'cancel' event.id  %}" class="btn btn-danger {% if btn %} {% else %} disabled {% endif %}">Cancel</a>
+        <a href="{% url 'cancel' event.id  %}" class="btn btn-danger {% if not btn %}disabled {% endif %}">Cancel</a>
 
   </div>
 </div>

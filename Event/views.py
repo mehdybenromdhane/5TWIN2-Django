@@ -9,6 +9,7 @@ from .forms import EventForm
 from .models import Event, Participation
 
 
+from django.contrib.auth.decorators import login_required
 from Person.models import Person
 def hello(request):
     
@@ -35,7 +36,7 @@ def details(request,ide):
 
 
    btn =False 
-   person = Person.objects.get(cin=12124545)
+   person = request.user
    event =  Event.objects.get(id=ide)
    
    result = Participation.objects.filter(person= person, event=event )
@@ -50,15 +51,17 @@ def details(request,ide):
    return render(request,'event/details.html',{'event':event , 'btn':btn})
 
 
-
+@login_required
 def addEvent(request):
     
     form = EventForm()
     
     if request.method=='POST':
     
+    
         form = EventForm(request.POST , request.FILES)
-        
+        form.instance.organisateur = request.user
+
         form.save()
         
         return redirect('listEvents')
@@ -95,7 +98,9 @@ class DeleteEvent(DeleteView):
     
 def participer(request, idEvent):
 
-    p1 = Person.objects.get(cin=12124545)
+
+   
+    p1 = request.user
     e1 = Event.objects.get(id=idEvent)
     
     participe =  Participation.objects.create(event=e1 , person=p1 )
@@ -111,7 +116,7 @@ def participer(request, idEvent):
     
 def cancel(request, idEvent):
 
-    p1 = Person.objects.get(cin=12124545)
+    p1 = request.user
     e1 = Event.objects.get(id=idEvent)
     
     participe =  Participation.objects.get(event=e1 , person=p1 )
