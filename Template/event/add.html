@@ -2,14 +2,64 @@
 
 
 {% block content %}
+
+<center>
 <h1>Add new Event</h1>
 
 
 <form action="{% url 'addEvent' %}" method="post" enctype="multipart/form-data">
-{{form.as_ul}}
+
+  <table>
+    <tr>
+        <td><label for="">Title</label></td>
+        <td>{{form.title}}</td>
+    </tr>
+
+      <tr>
+        <td><label for="">Description</label></td>
+        <td>{{form.description}}</td>
+        <td><button id="btn" class="btn btn-outline-info">Generate description</button></td>
+    </tr>
+      <tr>
+        <td><label for="">image</label></td>
+        <td>{{form.image}}</td>
+    </tr>
+      <tr>
+        <td><label for="">Event date</label></td>
+        <td>{{form.evt_date}}</td>
+    </tr>
+      <tr>
+        <td><label for="">category</label></td>
+        <td>{{form.category}}</td>
+    </tr>
+
+  </table>  
+
+<script>
+    document.getElementById('btn').addEventListener('click',
+    function(){
+
+     const title =document.getElementById('id_title').value;
+
+     fetch("{% url 'generate' %}",{
+        method:'POST',
+        headers:{
+            'ContentType':'application/json',
+            'X-CSRFToken':'{{csrf_token}}'
+        },
+
+        body:JSON.stringify({title:title})
+     } ) .then(response=>response.json()).then(data=>{document.getElementById('id_description').value = data.description})
+    }
+    )
+</script>
 
 {% csrf_token %}
 <input type="submit" value="save" class="btn btn-primary">
 
 </form>
+
+
+
+</center>
 {% endblock %}

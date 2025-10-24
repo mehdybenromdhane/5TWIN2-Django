@@ -20,7 +20,9 @@ urlpatterns = [
    
    path('join/<int:idEvent>', participer, name="join"),
    
-      path('cancel/<int:idEvent>', cancel, name="cancel")
-
+      path('cancel/<int:idEvent>', cancel, name="cancel"),
+      
+      path('generate/',generate_description , name="generate")
+ 
 
 ]

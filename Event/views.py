@@ -1,4 +1,6 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
+
+from django.http import JsonResponse
 
 from django.views.generic import ListView,CreateView,UpdateView,DeleteView
 # Create your views here.
@@ -11,6 +13,35 @@ from .models import Event, Participation
 
 from django.contrib.auth.decorators import login_required
 from Person.models import Person
+from google import genai
+
+import json
+
+def generate(title):
+# The client gets the API key from the environment variable `GEMINI_API_KEY`.
+    client = genai.Client()
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash", contents=f"generate a description for event with title : {title}"
+    )
+    return response.text
+
+
+
+def generate_description(request):
+    
+    if request.method=="POST":
+      data=  json.loads(request.body)
+      title= data.get('title',)
+
+
+      description = generate(title)  
+
+
+    return JsonResponse({'description':description})
+
+
+
 def hello(request):
     
     classe= "Bonjour 5TWIN2"
